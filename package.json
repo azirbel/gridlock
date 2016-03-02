@@ -1,0 +1,10 @@
+{
+  "name": "gridlock",
+  "version": "0.0.1",
+  "description": "",
+  "author": "Alex Zirbel",
+  "license": "MIT",
+  "dependencies": {
+    "jade": "1.11.0"
+  }
+}
