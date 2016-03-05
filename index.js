@@ -1,12 +1,10 @@
 'use strict'
 
-import Game from './src/game';
-
 require('./style.css');
 
-document.addEventListener('DOMContentLoaded', function(event) {
-  let game = new Game(document.getElementById('canvas'));
-  game.run();
-});
+import Game from './src/game';
 
-console.log('loaded!');
+document.addEventListener('DOMContentLoaded', (event) => {
+  let game = new Game(document.getElementById('canvas'));
+  game.start();
+});

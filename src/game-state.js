@@ -1,13 +1,19 @@
 export default class GameState {
-  constructor(canvas) {
-    this.canvas = canvas;
-  }
-
-  render() {
-    for (let i = 1; i < 10; i++) {
-      for (let j = 1; j < 10; j++) {
-        this.canvas.drawCircle(i, j, 0.02, '#333333');
+  constructor() {
+    this.driving = false;
+    this.paths = [
+      {
+        // x, y, direction (0 is north, 1 is east)
+        from: [1, 1, 1],
+        to: [2, 1, 3]
       }
-    }
+    ]
+    this.cars = [
+      {
+        type: 0,
+        currentPath: 0,
+        distanceOnPath: 0
+      }
+    ];
   }
 }
