@@ -1,0 +1,12 @@
+body {
+  background-color: #ddd;
+  text-align: center;
+  font-family: "Source Code Pro", monospace;
+}
+.canvas-container {
+  display: flex;
+  justify-content: center;
+}
+#canvas {
+  background-color: white;
+}
