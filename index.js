@@ -1,6 +1,8 @@
 'use strict'
 
-require("!style!css!./style.css");
+import GameState from './game-state';
+
+require('./style.css');
 
 class Canvas {
   constructor(canvas) {
@@ -35,21 +37,8 @@ class Canvas {
   }
 }
 
-class GameState {
-  constructor(canvas) {
-    this.canvas = canvas;
-  }
 
-  render() {
-    for (let i = 1; i < 10; i++) {
-      for (let j = 1; j < 10; j++) {
-        this.canvas.drawCircle(i, j, 0.02, '#333333');
-      }
-    }
-  }
-}
-
-document.addEventListener("DOMContentLoaded", function(event) {
+document.addEventListener('DOMContentLoaded', function(event) {
   let canvas = new Canvas(document.getElementById('canvas'));
   let state = new GameState(canvas);
   state.render();
