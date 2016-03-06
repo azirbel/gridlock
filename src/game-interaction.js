@@ -74,14 +74,22 @@ export default class GameInteraction {
   }
 
   mouseUpHandler(e) {
-    if (!this.selectedIntersection ) return;
+    if (!this.selectedIntersection) return;
+
+    let mousePos = this.getMouse(e);
+    if (PointHelpers.getEuclideanDistance(this.selectedIntersection, mousePos) < 0.3) {
+      // Clear arrows
+      this.state.arrows = reject(this.state.arrows, (arrow) => {
+        return arrow.from === this.selectedIntersection;
+      });
+    }
 
     this.selectedIntersection = null;
     this.selectedMatchingPaths = [];
   }
 
   mouseMoveHandler(e) {
-    if (!this.selectedIntersection ) return;
+    if (!this.selectedIntersection) return;
 
     let mousePos = this.getMouse(e);
     if (PointHelpers.getEuclideanDistance(this.selectedIntersection, mousePos) < 0.5) return;

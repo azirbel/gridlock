@@ -1,3 +1,5 @@
+import * as PointHelpers from './point-helpers';
+
 export default class GameDisplay {
   constructor(canvas) {
     this.canvas = canvas;
@@ -27,9 +29,18 @@ export default class GameDisplay {
       }
     });
 
+    // Draw the arrows
+    state.arrows.map((arrow) => {
+      let direction = PointHelpers.getVectorDirection(arrow.path.from, arrow.path.to);
+      let arrowLocation = PointHelpers.plus(arrow.path.from, PointHelpers.scale(direction, 0.25));
+
+      this.canvas.drawCircle(arrowLocation, 0.06, '#0000AA');
+    });
+
     // Draw the cars
     state.cars.map((car) => {
-      this.canvas.drawCircle(car.position, 0.2, '#AA0000');
+      let color = car.crashed ? '#AA0000' : '#0000AA';
+      this.canvas.drawCircle(car.position, 0.2, color);
     });
   }
 }

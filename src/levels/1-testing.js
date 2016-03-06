@@ -29,6 +29,7 @@ export default {
       type: 0,
       startingPoint: [4, 7],
       speed: 1,
+      crashed: false,
       currentPath: null,
       distanceOnPath: null,
       position: null

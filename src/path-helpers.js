@@ -8,26 +8,52 @@ export function pathsFromPoint(paths, point) {
   return paths
     .filter((path) => isEqual(path.from, point) || isEqual(path.to, point))
     .map((path) => {
-      let clonedPath = clone(path);
-
-      // Reverse the path if necessary
-      if (isEqual(clonedPath.to, point)) {
-        clonedPath.to = clonedPath.from;
-        clonedPath.from = point;
-        if (clonedPath.type === 'arc') {
-          clonedPath.clockwise = !clonedPath.clockwise;
-        }
+      // Reverse the path if it's going the wrong direction
+      if (isEqual(path.to, point)) {
+        return reversed(path);
+      } else {
+        return path;
       }
-
-      return clonedPath;
     });
 }
 
-export function pathLength(path) {
+export function length(path) {
   if (path.type === 'line') {
     return PointHelpers.getManhattanDistance(path.from, path.to);
   } else if (path.type === 'arc') {
     console.error('Arcs are not yet implemented.');
     return 0;
   }
+}
+
+export function reversed(path) {
+  let clonedPath = clone(path);
+
+  [clonedPath.to, clonedPath.from] = [clonedPath.from, clonedPath.to]
+  if (clonedPath.type === 'arc') {
+    clonedPath.clockwise = !clonedPath.clockwise;
+  }
+
+  return clonedPath;
+}
+
+// Cardinal direction of the path as it leaves its "from" point
+export function outboundDirection(path) {
+  if (path.type === 'line') {
+    return PointHelpers.getCardinalDirection(path.from, path.to);
+  } else if (path.type === 'arc') {
+    console.error('Arcs are not yet implemented.');
+    return 0;
+  }
+}
+
+// Cardinal direction of the path as it hits its "to" point, as seen from the
+// "to" point
+export function inboundDirection(path) {
+  return outboundDirection(reversed(path));
+}
+
+// TODO(azirbel): This doesn't belong in this file
+export function oppositeDirection(cardinalDirection) {
+  return (cardinalDirection + 2) % 4;
 }

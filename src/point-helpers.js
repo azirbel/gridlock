@@ -47,8 +47,8 @@ export function minus(point1, point2) {
   return zip(point1, point2).map((points) => points[0] - points[1]);
 }
 
-export function scale(point, scale) {
-  return point.map((num) => num * scale);
+export function scale(vector, scale) {
+  return vector.map((num) => num * scale);
 }
 
 export function dot(a, b) {
