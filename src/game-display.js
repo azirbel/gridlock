@@ -16,6 +16,12 @@ export default class GameDisplay {
       }
     }
 
+    // Draw the goals
+    state.goals.map((goal) => {
+      this.canvas.drawCircle(goal.position, 0.26, '#0000AA');
+      this.canvas.drawCircle(goal.position, 0.24, '#FFFFFF');
+    });
+
     // Draw the paths
     state.paths.map((path) => {
       if (path.type === 'line') {

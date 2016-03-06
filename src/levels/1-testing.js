@@ -30,9 +30,28 @@ export default {
       startingPoint: [4, 7],
       speed: 1,
       crashed: false,
+      inGoal: false,
       currentPath: null,
       distanceOnPath: null,
       position: null
+    },
+    {
+      type: 0,
+      startingPoint: [6, 8],
+      speed: 1,
+      crashed: false,
+      inGoal: false,
+      currentPath: null,
+      distanceOnPath: null,
+      position: null
+    }
+  ],
+
+  goals: [
+    {
+      type: 0,
+      isOccupied: false, // TODO(azirbel): Remove once collisions are done
+      position: [7, 6]
     }
   ],
 

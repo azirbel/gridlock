@@ -16,13 +16,14 @@ export default class GameEngine {
 
   tick(state, dt) {
     state.cars.map((car) => {
-      this.advanceCarAlongPath(car, dt, state.paths, state.arrows);
+      this.advanceCarAlongPath(car, dt, state.paths, state.arrows, state);
       this.updateCarPosition(car);
     });
   }
 
-  advanceCarAlongPath(car, dt, paths, arrows) {
-    if (car.crashed) return;
+  // TODO(azirbel): Refactor, just use state, or do it all better
+  advanceCarAlongPath(car, dt, paths, arrows, state) {
+    if (car.crashed || car.inGoal) return;
 
     let distanceOnPath = car.distanceOnPath + (car.speed * dt);
 
@@ -43,7 +44,35 @@ export default class GameEngine {
         // An arrow tells us which way to go
         newPath = matchingArrows[0].path;
       } else if (possiblePaths.length === 0) {
-        // Dead end and no other paths - turn around
+        // Dead end road
+
+        // But maybe it's a goal?
+        let matchingGoals = state.goals.filter((goal) => {
+          return isEqual(goal.position, car.currentPath.to);
+        });
+        if (matchingGoals.length >= 1) {
+          if (matchingGoals[0].isOccupied) {
+            console.log('ALREADY OCCUPIED - CRASH');
+            car.distanceOnPath = PathHelpers.length(car.currentPath);
+            car.crashed = true;
+
+            // HACK - mark all cars in the goal as crashed as well
+            state.cars.map((car) => {
+              if (isEqual(car.position, matchingGoals[0].position)) {
+                car.crashed = true;
+              }
+            });
+
+            return;
+          } else {
+            car.distanceOnPath = PathHelpers.length(car.currentPath);
+            car.inGoal = true;
+            matchingGoals[0].isOccupied = true;
+            return;
+          }
+        }
+
+        // Turn around
         newPath = PathHelpers.reversed(car.currentPath);
       } else if (possiblePaths.length === 1) {
         // No choice to make - only one way onward
