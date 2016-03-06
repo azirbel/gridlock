@@ -1,3 +1,5 @@
+import * as PointHelpers from './point-helpers';
+
 export default class Canvas {
   constructor(canvas) {
     this.pxSize = 600;
@@ -7,10 +9,14 @@ export default class Canvas {
   }
 
   render(state) {
+    // Draw the background
+    this.ctx.fillStyle = "#FFFFFF";
+    this.ctx.fillRect(0, 0, this.pxSize, this.pxSize);
+
     // Draw dots for a grid
     for (let i = 1; i < 10; i++) {
       for (let j = 1; j < 10; j++) {
-        this.drawCircle(i, j, 0.02, '#333333');
+        this.drawCircle([i, j], 0.02, '#333333');
       }
     }
 
@@ -19,13 +25,29 @@ export default class Canvas {
       if (path.type === 'line') {
         this.drawLine(path.from, path.to, '#00AA00');
       } else if (path.type === 'arc') {
-        this.drawArc(path.from, path.to, path.center, '#00AA00', path.counterclockwise);
+        this.drawArc(path.from,
+                     path.to,
+                     path.center,
+                     '#00AA00',
+                     path.counterclockwise);
       }
     });
 
     // Draw the car
     state.cars.map((car) => {
-      this.drawCircle(state.paths[0].from[0], state.paths[0].from[1], 0.2, '#AA0000');
+      let path = car.currentPath;
+      let distance = car.distanceOnPath;
+
+      if (path.type === 'line') {
+        let direction = PointHelpers.getPointDirection(path.from, path.to);
+        let position = PointHelpers.plus(
+            path.from,
+            PointHelpers.scale(direction, distance));
+
+        this.drawCircle(position, 0.2, '#AA0000');
+      } else if (path.type === 'arc') {
+        console.log('cant handle arcs yet.');
+      }
     });
   }
 
@@ -42,35 +64,19 @@ export default class Canvas {
     this.ctx.beginPath();
     this.ctx.arc(
       ...this._gridToPx(center),
-      this._gridToPx(this._getManhattanDistance(from, center)),
-      this._getCardinalDirection(center, from) * Math.PI / 2,
-      this._getCardinalDirection(center, to) * Math.PI / 2,
+      this._gridToPx(PointHelpers.getManhattanDistance(from, center)),
+      PointHelpers.getCardinalDirection(center, from) * Math.PI / 2,
+      PointHelpers.getCardinalDirection(center, to) * Math.PI / 2,
       isCounterClockwise);
     this.ctx.stroke();
   }
 
-  _getCardinalDirection(from, to) {
-    if (from[0] === to[0]) {
-      // North or south
-      return (to[1] > from[1]) ? 1 : 3;
-    } else if (from[1] === to[1]) {
-      // East or west
-      return (to[0] > from[0]) ? 0 : 2;
-    } else {
-      return null;
-    }
-  }
-
-  _getManhattanDistance(from, to) {
-    return Math.abs(to[0] - from[0]) + Math.abs(to[1] - from[1]);
-  }
-
-  drawCircle(x, y, radius, color) {
+  drawCircle(point, radius, color) {
     this.ctx.fillStyle = color;
     this.ctx.beginPath();
     this.ctx.arc(
-      this._gridToPx(x),
-      this._gridToPx(y),
+      this._gridToPx(point[0]),
+      this._gridToPx(point[1]),
       this._gridToPx(radius),
       0,
       Math.PI * 2,
@@ -85,11 +91,5 @@ export default class Canvas {
     } else {
       return g * this.pxSize / (this.gridSize + 1)
     }
-  }
-
-  // Need to convert to use px values
-  _drawRectDeprecated(rect, color) {
-    this.ctx.fillStyle = color;
-    this.ctx.fillRect(...rect);
   }
 }

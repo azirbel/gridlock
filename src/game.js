@@ -10,6 +10,8 @@ export default class Game {
     this.state = new GameState();
     this.engine = new GameEngine();
 
+    this.engine.initialize(this.state);
+
     this.intervalId = null;
   }
 
