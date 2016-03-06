@@ -1,54 +1,16 @@
 import * as PointHelpers from './point-helpers';
 
 export default class Canvas {
-  constructor(canvas) {
+  constructor(canvasElement) {
     this.pxSize = 600;
     this.gridSize = 9;
 
-    this.ctx = canvas.getContext('2d');
+    this.ctx = canvasElement.getContext('2d');
   }
 
-  render(state) {
-    // Draw the background
+  fillBackground() {
     this.ctx.fillStyle = "#FFFFFF";
     this.ctx.fillRect(0, 0, this.pxSize, this.pxSize);
-
-    // Draw dots for a grid
-    for (let i = 1; i < 10; i++) {
-      for (let j = 1; j < 10; j++) {
-        this.drawCircle([i, j], 0.02, '#333333');
-      }
-    }
-
-    // Draw the paths
-    state.paths.map((path) => {
-      if (path.type === 'line') {
-        this.drawLine(path.from, path.to, '#00AA00');
-      } else if (path.type === 'arc') {
-        this.drawArc(path.from,
-                     path.to,
-                     path.center,
-                     '#00AA00',
-                     path.counterclockwise);
-      }
-    });
-
-    // Draw the car
-    state.cars.map((car) => {
-      let path = car.currentPath;
-      let distance = car.distanceOnPath;
-
-      if (path.type === 'line') {
-        let direction = PointHelpers.getPointDirection(path.from, path.to);
-        let position = PointHelpers.plus(
-            path.from,
-            PointHelpers.scale(direction, distance));
-
-        this.drawCircle(position, 0.2, '#AA0000');
-      } else if (path.type === 'arc') {
-        console.log('cant handle arcs yet.');
-      }
-    });
   }
 
   drawLine(from, to, color) {
@@ -85,11 +47,12 @@ export default class Canvas {
     this.ctx.fill();
   }
 
-  _gridToPx(g) {
-    if (Array.isArray(g)) {
-      return g.map((num) => this._gridToPx(num));
+  // Handles both arrays and numbers
+  _gridToPx(gridThing) {
+    if (Array.isArray(gridThing)) {
+      return gridThing.map((num) => this._gridToPx(num));
     } else {
-      return g * this.pxSize / (this.gridSize + 1)
+      return gridThing * this.pxSize / (this.gridSize + 1)
     }
   }
 }

@@ -1,17 +1,20 @@
-import GameState from './game-state';
-import GameEngine from './game-engine';
 import Canvas from './canvas';
+import GameEngine from './game-engine';
+import GameDisplay from './game-display';
+
+import Level1 from './levels/1-testing';
 
 const FPS = 60;
 
 export default class Game {
   constructor(canvasElement) {
-    this.canvas = new Canvas(canvasElement);
-    this.state = new GameState();
+    let canvas = new Canvas(canvasElement);
+
+    this.display = new GameDisplay(canvas);
     this.engine = new GameEngine();
+    this.state = Level1;
 
     this.engine.initialize(this.state);
-
     this.intervalId = null;
   }
 
@@ -24,7 +27,7 @@ export default class Game {
   }
 
   _loop() {
-    this.engine.tick(this.state);
-    this.canvas.render(this.state);
+    this.engine.tick(this.state, 1 / FPS);
+    this.display.render(this.state);
   }
 }

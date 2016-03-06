@@ -1,18 +1,22 @@
 import { zip, sum } from 'lodash';
 
+// Return the direction you would go from `from` to get to `to`.
+// 0 is east, 1 is south, etc.
 export function getCardinalDirection(from, to) {
+  // North or south
   if (from[0] === to[0]) {
-    // North or south
     return (to[1] > from[1]) ? 1 : 3;
+  // East or west
   } else if (from[1] === to[1]) {
-    // East or west
     return (to[0] > from[0]) ? 0 : 2;
+  // Not found
   } else {
     return null;
   }
 }
 
-export function getPointDirection(from, to) {
+// Return the [x, y] vector direction you would go from `from` to get to `to`.
+export function getVectorDirection(from, to) {
   switch (getCardinalDirection(from, to)) {
     case 0:
       return [1, 0];
