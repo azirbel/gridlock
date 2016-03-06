@@ -21,7 +21,7 @@ export default class Canvas {
     this.ctx.stroke();
   }
 
-  drawArc(from, to, center, color, isCounterClockwise = false) {
+  drawArc(from, to, center, color, isClockwise = true) {
     this.ctx.fillStyle = color;
     this.ctx.beginPath();
     this.ctx.arc(
@@ -29,7 +29,7 @@ export default class Canvas {
       this._gridToPx(PointHelpers.getManhattanDistance(from, center)),
       PointHelpers.getCardinalDirection(center, from) * Math.PI / 2,
       PointHelpers.getCardinalDirection(center, to) * Math.PI / 2,
-      isCounterClockwise);
+      !isClockwise);
     this.ctx.stroke();
   }
 

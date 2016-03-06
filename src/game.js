@@ -1,5 +1,6 @@
 import Canvas from './canvas';
 import GameEngine from './game-engine';
+import GameInteraction from './game-interaction';
 import GameDisplay from './game-display';
 
 import Level1 from './levels/1-testing';
@@ -12,9 +13,11 @@ export default class Game {
 
     this.display = new GameDisplay(canvas);
     this.engine = new GameEngine();
+    this.interactions = new GameInteraction(canvasElement);
     this.state = Level1;
 
     this.engine.initialize(this.state);
+    this.interactions.initialize(this.state);
     this.intervalId = null;
   }
 

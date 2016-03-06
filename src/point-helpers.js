@@ -35,10 +35,22 @@ export function getManhattanDistance(from, to) {
   return Math.abs(to[0] - from[0]) + Math.abs(to[1] - from[1]);
 }
 
+export function getEuclideanDistance(from, to) {
+  return Math.sqrt(Math.pow(to[0] - from[0], 2) + Math.pow(to[1] - from[1], 2));
+}
+
 export function plus(point1, point2) {
   return zip(point1, point2).map((points) => sum(points));
 }
 
+export function minus(point1, point2) {
+  return zip(point1, point2).map((points) => points[0] - points[1]);
+}
+
 export function scale(point, scale) {
   return point.map((num) => num * scale);
+}
+
+export function dot(a, b) {
+  return (a[0] * b[0]) + (a[1] * b[1]);
 }

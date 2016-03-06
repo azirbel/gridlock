@@ -11,11 +11,11 @@ export function pathsFromPoint(paths, point) {
       let clonedPath = clone(path);
 
       // Reverse the path if necessary
-      if (clonedPath.to === point) {
+      if (isEqual(clonedPath.to, point)) {
         clonedPath.to = clonedPath.from;
         clonedPath.from = point;
         if (clonedPath.type === 'arc') {
-          clonedPath.counterclockwise = !clonedPath.counterclockwise;
+          clonedPath.clockwise = !clonedPath.clockwise;
         }
       }
 

@@ -23,7 +23,7 @@ export default class GameDisplay {
                      path.to,
                      path.center,
                      '#00AA00',
-                     path.counterclockwise);
+                     path.clockwise);
       }
     });
 
