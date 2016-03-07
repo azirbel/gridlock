@@ -54,6 +54,8 @@ export default class GameInteraction {
   }
 
   mouseDownHandler(e) {
+    if (this.state.driving) return;
+
     let mousePos = this.getMouse(e);
     let roundedMousePos = mousePos.map((num) => Math.round(num));
 
@@ -74,6 +76,7 @@ export default class GameInteraction {
   }
 
   mouseUpHandler(e) {
+    if (this.state.driving) return;
     if (!this.selectedIntersection) return;
 
     let mousePos = this.getMouse(e);
@@ -89,6 +92,7 @@ export default class GameInteraction {
   }
 
   mouseMoveHandler(e) {
+    if (this.state.driving) return;
     if (!this.selectedIntersection) return;
 
     let mousePos = this.getMouse(e);

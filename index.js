@@ -4,7 +4,14 @@ require('./style.css');
 
 import Game from './src/game';
 
+let game = new Game();
+
+window.toggleDriving = function() {
+  game.toggleDriving();
+}
+
 document.addEventListener('DOMContentLoaded', (event) => {
-  let game = new Game(document.getElementById('canvas'));
+  game.initialize(document.getElementById('canvas'),
+                  document.body);
   game.start();
 });

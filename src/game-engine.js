@@ -1,6 +1,6 @@
 import * as PathHelpers from './path-helpers';
 import * as PointHelpers from './point-helpers';
-import { isEqual } from 'lodash';
+import { every, isEqual, some } from 'lodash';
 
 export default class GameEngine {
   initialize(state) {
@@ -19,6 +19,14 @@ export default class GameEngine {
       this.advanceCarAlongPath(car, dt, state.paths, state.arrows, state);
       this.updateCarPosition(car);
     });
+
+    if (some(state.cars, 'crashed')) {
+      state.loss = true;
+    }
+
+    if (every(state.cars, 'inGoal')) {
+      state.win = true;
+    }
   }
 
   // TODO(azirbel): Refactor, just use state, or do it all better
