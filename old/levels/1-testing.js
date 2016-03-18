@@ -75,7 +75,7 @@ export default {
     {
       type: 0,
       isOccupied: false, // TODO(azirbel): Remove once collisions are done
-      position: [8, 5]
+      position: [8, 6]
     }
   ],
 

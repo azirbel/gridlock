@@ -1,17 +1,11 @@
-'use strict'
-
 require('./style.css');
 
-import Game from './src/game';
+import React from 'react'
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
 
-let game = new Game();
-
-window.toggleDriving = function() {
-  game.toggleDriving();
-}
-
-document.addEventListener('DOMContentLoaded', (event) => {
-  game.initialize(document.getElementById('canvas'),
-                  document.body);
-  game.start();
-});
+render(
+  <h1>Gridlock 2</h1>,
+  document.getElementById('root')
+)
