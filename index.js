@@ -1,11 +1,19 @@
 require('./style.css');
 
-import React from 'react'
-import { render } from 'react-dom'
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import React from 'react';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import game from './reducers';
+import Game from './components/game';
 
-render(
-  <h1>Gridlock 2</h1>,
-  document.getElementById('root')
-)
+let store = createStore(game)
+
+document.addEventListener('DOMContentLoaded', () => {
+  render(
+    <Provider store={store}>
+      <Game />
+    </Provider>,
+    document.getElementById('root')
+  );
+});

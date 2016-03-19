@@ -1,6 +1,6 @@
 // Mock for how my state object should look.
-
-{
+export default {
+  driving: false,
   levels: [
     {
       id: 1,
@@ -39,12 +39,9 @@
       },
 
       state: {
-        driving: false,
         win: false,
         loss: false,
         arrows: [],
-
-        // All state copied from config
         carsById: {
           1: {
             crashed: false,
