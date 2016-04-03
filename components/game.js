@@ -1,12 +1,12 @@
 import React from 'react';
 import ToggleDrivingSwitch from '../containers/toggle-driving-swtich';
-import GameArea from '../components/game-area';
+import LevelGameArea from '../containers/level-game-area';
 
 const Game = () => (
   <div>
     <h1>Gridlock</h1>
     <ToggleDrivingSwitch />
-    <GameArea />
+    <LevelGameArea />
   </div>
 );
 

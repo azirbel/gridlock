@@ -5,11 +5,10 @@ import { toggleDriving } from '../actions';
 let ToggleDrivingSwitch = ({ dispatch }) => {
   return (
     <div>
-      Here I am.
       <button onClick={e => {
         dispatch(toggleDriving());
       }}>
-        Click me!
+        Play/Pause
       </button>
     </div>
   );

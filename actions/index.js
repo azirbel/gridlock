@@ -1,6 +1,7 @@
-export const tick = () => {
+export const tick = (dt) => {
   return {
-    type: 'TICK'
+    type: 'TICK',
+    dt
   }
 }
 
