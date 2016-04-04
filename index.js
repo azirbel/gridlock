@@ -12,18 +12,17 @@ let store = createStore(game)
 
 let lastTime = null
 let rafTick = (timestamp) => {
-  let dt = timestamp - lastTime
+  let dtMillis = timestamp - lastTime
   lastTime = timestamp
 
-  if (dt > 0) {
-    store.dispatch(tick(dt))
+  if (dtMillis > 0) {
+    store.dispatch(tick(dtMillis / 1000))
   }
 
   requestAnimationFrame(rafTick);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('hi')
   lastTime = performance.now()
   requestAnimationFrame(rafTick)
 
